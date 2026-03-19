@@ -1,0 +1,14 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+    ports:
+      - "80:80"
+    restart: unless-stopped
+
+# Future backend slot (optional):
+#  api:
+#    image: ghcr.io/yourname/your-api:latest
+#    restart: unless-stopped
+
