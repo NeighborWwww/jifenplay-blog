@@ -42,3 +42,33 @@ docker compose up --build
 
 Then open `http://localhost/`.
 
+## CMS backend (Directus)
+
+Directus provides an admin UI + API for managing blog content.
+
+- Copy env template:
+
+```bash
+cp infra/directus/.env.example .env
+```
+
+- Start services:
+
+```bash
+docker compose up -d --build
+```
+
+- Open Directus admin:
+  - `http://localhost:8055/admin`
+
+### Configure schema + permissions
+
+- Schema reference: `infra/directus/schema.md`
+- Auth reference (local + GitHub OAuth): `infra/directus/auth.md`
+
+### Frontend API config
+
+The web app reads posts from Directus.
+
+- Set `VITE_DIRECTUS_URL` at build time (defaults to `http://localhost:8055`).
+

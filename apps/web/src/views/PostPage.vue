@@ -1,13 +1,33 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import { RouterLink } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import AppShell from '../layouts/AppShell.vue'
-import { getPost } from '../content/posts'
+import { getPostBySlug, type Post } from '../api/directus'
 
 const props = defineProps<{ slug: string }>()
-const post = computed(() => getPost(props.slug))
-const { t } = useI18n()
+const { t, locale } = useI18n()
+
+const apiLocale = computed(() => (locale.value === 'zh' ? 'zh' : 'en'))
+const post = ref<Post | undefined>(undefined)
+const loading = ref(true)
+const error = ref<string | null>(null)
+
+async function load() {
+  loading.value = true
+  error.value = null
+  try {
+    post.value = await getPostBySlug(props.slug, apiLocale.value)
+  } catch (e) {
+    error.value = e instanceof Error ? e.message : String(e)
+    post.value = undefined
+  } finally {
+    loading.value = false
+  }
+}
+
+onMounted(load)
+watch([() => props.slug, apiLocale], load)
 </script>
 
 <template>
@@ -21,7 +41,18 @@ const { t } = useI18n()
         {{ t('posts.back') }}
       </RouterLink>
 
-      <div v-if="!post" class="mt-8 rounded-3xl border border-[rgba(var(--border)/0.7)] bg-[rgba(var(--card)/0.65)] p-6">
+      <div v-if="error" class="mt-8 rounded-3xl border border-[rgba(var(--border)/0.7)] bg-[rgba(var(--card)/0.65)] p-6">
+        <div class="text-sm font-medium">API error</div>
+        <div class="mt-2 text-sm text-[rgba(var(--fg)/0.7)]">
+          {{ error }}
+        </div>
+      </div>
+
+      <div v-else-if="loading" class="mt-8 rounded-3xl border border-[rgba(var(--border)/0.7)] bg-[rgba(var(--card)/0.5)] p-6">
+        <div class="text-sm text-[rgba(var(--fg)/0.6)]">Loading…</div>
+      </div>
+
+      <div v-else-if="!post" class="mt-8 rounded-3xl border border-[rgba(var(--border)/0.7)] bg-[rgba(var(--card)/0.65)] p-6">
         <div class="text-lg font-semibold tracking-tight">{{ t('posts.notFound') }}</div>
         <div class="mt-2 text-sm text-[rgba(var(--fg)/0.7)]">
           {{ t('posts.notFoundBody') }} <code class="font-mono">{{ slug }}</code>.

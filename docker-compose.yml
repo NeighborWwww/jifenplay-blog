@@ -7,8 +7,59 @@ services:
       - "80:80"
     restart: unless-stopped
 
-# Future backend slot (optional):
-#  api:
-#    image: ghcr.io/yourname/your-api:latest
-#    restart: unless-stopped
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-directus}
+      POSTGRES_USER: ${POSTGRES_USER:-directus}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-directus}
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  directus:
+    image: directus/directus:latest
+    depends_on:
+      - db
+    ports:
+      - "8055:8055"
+    environment:
+      KEY: ${DIRECTUS_KEY:-replace-me}
+      SECRET: ${DIRECTUS_SECRET:-replace-me}
+
+      DB_CLIENT: pg
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_DATABASE: ${POSTGRES_DB:-directus}
+      DB_USER: ${POSTGRES_USER:-directus}
+      DB_PASSWORD: ${POSTGRES_PASSWORD:-directus}
+
+      # First-run admin bootstrap
+      ADMIN_EMAIL: ${DIRECTUS_ADMIN_EMAIL:-admin@example.com}
+      ADMIN_PASSWORD: ${DIRECTUS_ADMIN_PASSWORD:-change-me-now}
+
+      # CORS for local web dev + future app
+      CORS_ENABLED: "true"
+      CORS_ORIGIN: ${DIRECTUS_CORS_ORIGIN:-http://localhost:5173,http://localhost}
+
+      # Public URL (set in production)
+      PUBLIC_URL: ${DIRECTUS_PUBLIC_URL:-http://localhost:8055}
+
+      # GitHub OAuth placeholders (configure in Directus once you create the GitHub OAuth app)
+      AUTH_PROVIDERS: ${DIRECTUS_AUTH_PROVIDERS:-}
+      AUTH_GITHUB_DRIVER: ${DIRECTUS_AUTH_GITHUB_DRIVER:-oauth2}
+      AUTH_GITHUB_CLIENT_ID: ${DIRECTUS_AUTH_GITHUB_CLIENT_ID:-}
+      AUTH_GITHUB_CLIENT_SECRET: ${DIRECTUS_AUTH_GITHUB_CLIENT_SECRET:-}
+      AUTH_GITHUB_ISSUER_URL: ${DIRECTUS_AUTH_GITHUB_ISSUER_URL:-https://github.com}
+      AUTH_GITHUB_IDENTIFIER_KEY: ${DIRECTUS_AUTH_GITHUB_IDENTIFIER_KEY:-email}
+
+    volumes:
+      - directus_uploads:/directus/uploads
+      - directus_extensions:/directus/extensions
+    restart: unless-stopped
+
+volumes:
+  db_data:
+  directus_uploads:
+  directus_extensions:
 
