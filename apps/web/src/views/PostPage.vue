@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { RouterLink } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import AppShell from '../layouts/AppShell.vue'
 import { getPost } from '../content/posts'
 
 const props = defineProps<{ slug: string }>()
 const post = computed(() => getPost(props.slug))
+const { t } = useI18n()
 </script>
 
 <template>
@@ -16,13 +18,13 @@ const post = computed(() => getPost(props.slug))
         class="inline-flex items-center gap-2 rounded-full border border-[rgba(var(--border)/0.9)] bg-[rgba(var(--card)/0.55)] px-4 py-2 text-sm text-[rgba(var(--fg)/0.8)] hover:bg-[rgba(var(--fg)/0.05)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(var(--accent)/0.7)]"
       >
         <span aria-hidden="true">←</span>
-        Back to posts
+        {{ t('posts.back') }}
       </RouterLink>
 
       <div v-if="!post" class="mt-8 rounded-3xl border border-[rgba(var(--border)/0.7)] bg-[rgba(var(--card)/0.65)] p-6">
-        <div class="text-lg font-semibold tracking-tight">Not found</div>
+        <div class="text-lg font-semibold tracking-tight">{{ t('posts.notFound') }}</div>
         <div class="mt-2 text-sm text-[rgba(var(--fg)/0.7)]">
-          No post for slug <code class="font-mono">{{ slug }}</code>.
+          {{ t('posts.notFoundBody') }} <code class="font-mono">{{ slug }}</code>.
         </div>
       </div>
 

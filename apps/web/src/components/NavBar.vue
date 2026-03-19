@@ -1,11 +1,15 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import { useTheme } from '../composables/useTheme'
+import { useLocale } from '../composables/useLocale'
 
 const route = useRoute()
 const isHome = computed(() => route.name === 'home')
 const { isDark, toggle } = useTheme()
+const { t } = useI18n()
+const { locale, toggle: toggleLocale } = useLocale()
 </script>
 
 <template>
@@ -31,16 +35,26 @@ const { isDark, toggle } = useTheme()
             class="rounded-full px-3 py-1.5 hover:bg-[rgba(var(--fg)/0.05)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(var(--accent)/0.7)]"
             :class="route.name === 'posts' || route.name === 'post' ? 'text-[rgb(var(--fg))]' : ''"
           >
-            Posts
+            {{ t('nav.posts') }}
           </RouterLink>
           <button
             type="button"
             class="inline-flex items-center gap-2 rounded-full px-3 py-1.5 hover:bg-[rgba(var(--fg)/0.05)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(var(--accent)/0.7)]"
-            @click="toggle"
-            :aria-label="isDark ? 'Switch to light mode' : 'Switch to dark mode'"
+            @click="toggleLocale"
+            :aria-label="locale === 'zh' ? t('nav.switchToEn') : t('nav.switchToZh')"
           >
             <span class="text-xs font-medium text-[rgba(var(--fg)/0.75)]">
-              {{ isDark ? 'Dark' : 'Light' }}
+              {{ locale === 'zh' ? t('nav.langZh') : t('nav.langEn') }}
+            </span>
+          </button>
+          <button
+            type="button"
+            class="inline-flex items-center gap-2 rounded-full px-3 py-1.5 hover:bg-[rgba(var(--fg)/0.05)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(var(--accent)/0.7)]"
+            @click="toggle"
+            :aria-label="isDark ? t('nav.switchToLight') : t('nav.switchToDark')"
+          >
+            <span class="text-xs font-medium text-[rgba(var(--fg)/0.75)]">
+              {{ isDark ? t('nav.dark') : t('nav.light') }}
             </span>
             <span
               class="inline-flex h-5 w-9 items-center rounded-full border border-[rgba(var(--border)/0.9)] bg-[rgba(var(--card2)/0.55)] p-[2px]"
@@ -58,7 +72,7 @@ const { isDark, toggle } = useTheme()
             rel="noreferrer"
             class="rounded-full px-3 py-1.5 hover:bg-[rgba(var(--fg)/0.05)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(var(--accent)/0.7)]"
           >
-            GitHub
+            {{ t('nav.github') }}
           </a>
         </nav>
       </div>
@@ -67,7 +81,7 @@ const { isDark, toggle } = useTheme()
         <div
           class="rounded-2xl border border-[rgba(var(--border)/0.6)] bg-[rgba(var(--card2)/0.55)] px-4 py-3 text-xs text-[rgba(var(--fg)/0.7)]"
         >
-          Minimal blog scaffold. Markdown posts live in <code class="font-mono">content/posts/</code>.
+          {{ t('banner.home') }} <code class="font-mono">content/posts/</code>.
         </div>
       </div>
     </div>

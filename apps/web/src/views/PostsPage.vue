@@ -1,17 +1,19 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import AppShell from '../layouts/AppShell.vue'
 import { listPosts } from '../content/posts'
 
+const { t } = useI18n()
 const posts = listPosts()
 </script>
 
 <template>
   <AppShell>
     <section>
-      <h1 class="text-3xl font-semibold tracking-tight sm:text-5xl">Posts</h1>
+      <h1 class="text-3xl font-semibold tracking-tight sm:text-5xl">{{ t('posts.title') }}</h1>
       <p class="mt-3 max-w-2xl text-sm leading-6 text-[rgba(var(--fg)/0.7)] sm:text-base">
-        Posts are Markdown files in <code class="font-mono">content/posts/</code>.
+        {{ t('posts.subtitle') }} <code class="font-mono">content/posts/</code>.
       </p>
 
       <div class="mt-8 grid gap-4 sm:grid-cols-2">

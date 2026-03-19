@@ -1,0 +1,82 @@
+export const messages = {
+  en: {
+    nav: {
+      posts: 'Posts',
+      github: 'GitHub',
+      light: 'Light',
+      dark: 'Dark',
+      switchToLight: 'Switch to light mode',
+      switchToDark: 'Switch to dark mode',
+      langEn: 'EN',
+      langZh: '中文',
+      switchToZh: 'Switch to Chinese',
+      switchToEn: 'Switch to English',
+    },
+    home: {
+      hero: [
+        'Simple blog, high-tech feel.',
+        'Write in Markdown. Ship in minutes.',
+        'Minimal UI. Maximum clarity.',
+      ],
+      subtitle:
+        'Clean typography, generous spacing, subtle glass + gradients. Built with Vue + Vite and Markdown posts stored in git.',
+      viewPosts: 'View posts',
+      techStack: 'Tech stack',
+      designLabel: 'Design',
+      designTitle: 'Apple-like UI basics',
+      designBody: 'Neutral palette, crisp type, restrained motion, and layered surfaces.',
+      contentLabel: 'Content',
+      contentTitle: 'Markdown in repo',
+      contentBody: 'No backend needed for now. Add a backend later without changing the UI.',
+      stackLabel: 'Stack',
+    },
+    posts: {
+      title: 'Posts',
+      subtitle: 'Posts are Markdown files in',
+      back: 'Back to posts',
+      notFound: 'Not found',
+      notFoundBody: 'No post for slug',
+    },
+    banner: {
+      home: 'Minimal blog scaffold. Markdown posts live in content/posts/.',
+    },
+  },
+  zh: {
+    nav: {
+      posts: '文章',
+      github: 'GitHub',
+      light: '浅色',
+      dark: '深色',
+      switchToLight: '切换到浅色模式',
+      switchToDark: '切换到深色模式',
+      langEn: 'EN',
+      langZh: '中文',
+      switchToZh: '切换到中文',
+      switchToEn: '切换到英文',
+    },
+    home: {
+      hero: ['简单博客，科技感十足。', '用 Markdown 写作，分钟级上线。', '极简界面，极致清晰。'],
+      subtitle: '干净的排版、充足的留白、轻微的玻璃与渐变层次。基于 Vue + Vite，文章以 Markdown 存在仓库中。',
+      viewPosts: '查看文章',
+      techStack: '技术栈',
+      designLabel: '设计',
+      designTitle: 'Apple 风格基础',
+      designBody: '中性配色、清晰字体、克制动效与分层材质。',
+      contentLabel: '内容',
+      contentTitle: 'Markdown 存仓库',
+      contentBody: '现在不需要后端。未来要加后端也不会影响 UI。',
+      stackLabel: '技术栈',
+    },
+    posts: {
+      title: '文章',
+      subtitle: '文章来自',
+      back: '返回列表',
+      notFound: '未找到',
+      notFoundBody: '找不到文章：',
+    },
+    banner: {
+      home: '这是一个极简博客脚手架。Markdown 文章位于 content/posts/。',
+    },
+  },
+} as const
+
