@@ -6,9 +6,11 @@ import NavBar from '../components/NavBar.vue'
   <div class="relative min-h-dvh text-[rgb(var(--fg))]">
     <div class="pointer-events-none fixed inset-0 -z-10 bg-[rgb(var(--bg))]">
       <div
-        class="flowBlob absolute -top-48 left-1/2 h-[620px] w-[980px] -translate-x-1/2 rounded-full blur-3xl"
+        class="flowBlob absolute -top-48 left-1/2 h-[620px] w-[980px] -translate-x-1/2 rounded-full blur-[110px] opacity-90"
       />
-      <div class="flowBlob2 absolute top-24 left-1/2 h-[520px] w-[920px] -translate-x-1/2 rounded-full blur-3xl" />
+      <div
+        class="flowBlob2 absolute top-24 left-1/2 h-[520px] w-[920px] -translate-x-1/2 rounded-full blur-[120px] opacity-85"
+      />
       <div class="noise" />
     </div>
 

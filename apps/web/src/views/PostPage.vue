@@ -34,7 +34,7 @@ const post = computed(() => getPost(props.slug))
           {{ post.title }}
         </h1>
         <div
-          class="mt-8 rounded-3xl border border-[rgba(var(--border)/0.7)] bg-[rgba(var(--card)/0.65)] p-6 sm:p-10"
+          class="mt-8 rounded-3xl border border-[rgba(var(--border)/0.7)] bg-[rgba(var(--card)/0.55)] p-6 backdrop-blur-2xl sm:p-10"
         >
           <div
             class="prose prose-zinc max-w-none prose-headings:tracking-tight prose-a:decoration-[rgba(var(--accent)/0.6)] prose-a:underline-offset-4 dark:prose-invert"
