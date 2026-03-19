@@ -10,6 +10,9 @@
   --card: 255 255 255;
   --card2: 250 250 252;
   --accent: 0 122 255;
+  --flow1: 0 122 255;
+  --flow2: 124 58 237;
+  --flow3: 236 72 153;
 
   color-scheme: light dark;
   font-synthesis: none;
@@ -18,8 +21,21 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+:root.dark {
+  --bg: 10 10 12;
+  --fg: 244 244 245;
+  --muted: 161 161 170;
+  --border: 39 39 42;
+  --card: 16 16 18;
+  --card2: 20 20 24;
+  --accent: 10 132 255;
+  --flow1: 10 132 255;
+  --flow2: 167 139 250;
+  --flow3: 99 102 241;
+}
+
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not(.dark):not([data-theme='light']) {
     --bg: 10 10 12;
     --fg: 244 244 245;
     --muted: 161 161 170;
@@ -27,6 +43,9 @@
     --card: 16 16 18;
     --card2: 20 20 24;
     --accent: 10 132 255;
+    --flow1: 10 132 255;
+    --flow2: 167 139 250;
+    --flow3: 99 102 241;
   }
 }
 
@@ -75,4 +94,63 @@ body {
   mix-blend-mode: overlay;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");
   background-size: 160px 160px;
+}
+
+.flowBlob {
+  background: radial-gradient(
+    circle at 30% 40%,
+    rgba(var(--flow2) / 0.22),
+    rgba(var(--flow1) / 0.16),
+    rgba(0 0 0 / 0)
+  );
+  animation: flowFloat1 16s ease-in-out infinite;
+  transform-origin: center;
+}
+
+.flowBlob2 {
+  background: radial-gradient(
+    circle at 60% 50%,
+    rgba(var(--flow1) / 0.18),
+    rgba(var(--flow3) / 0.14),
+    rgba(0 0 0 / 0)
+  );
+  animation: flowFloat2 18s ease-in-out infinite;
+  transform-origin: center;
+}
+
+@keyframes flowFloat1 {
+  0% {
+    transform: translate3d(-50%, 0, 0) scale(1);
+    filter: saturate(1.05);
+  }
+  50% {
+    transform: translate3d(calc(-50% + 34px), 18px, 0) scale(1.07);
+    filter: saturate(1.25);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0) scale(1);
+    filter: saturate(1.05);
+  }
+}
+
+@keyframes flowFloat2 {
+  0% {
+    transform: translate3d(-50%, 0, 0) scale(1);
+    filter: saturate(1.05);
+  }
+  50% {
+    transform: translate3d(calc(-50% - 26px), -12px, 0) scale(1.06);
+    filter: saturate(1.25);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0) scale(1);
+    filter: saturate(1.05);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flowBlob,
+  .flowBlob2 {
+    animation: none;
+  }
 }

@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
+import { useTheme } from '../composables/useTheme'
 
 const route = useRoute()
 const isHome = computed(() => route.name === 'home')
+const { isDark, toggle } = useTheme()
 </script>
 
 <template>
@@ -31,6 +33,25 @@ const isHome = computed(() => route.name === 'home')
           >
             Posts
           </RouterLink>
+          <button
+            type="button"
+            class="inline-flex items-center gap-2 rounded-full px-3 py-1.5 hover:bg-[rgba(var(--fg)/0.05)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(var(--accent)/0.7)]"
+            @click="toggle"
+            :aria-label="isDark ? 'Switch to light mode' : 'Switch to dark mode'"
+          >
+            <span class="text-xs font-medium text-[rgba(var(--fg)/0.75)]">
+              {{ isDark ? 'Dark' : 'Light' }}
+            </span>
+            <span
+              class="inline-flex h-5 w-9 items-center rounded-full border border-[rgba(var(--border)/0.9)] bg-[rgba(var(--card2)/0.55)] p-[2px]"
+              aria-hidden="true"
+            >
+              <span
+                class="h-4 w-4 rounded-full bg-[rgba(var(--fg)/0.75)] transition-transform"
+                :class="isDark ? 'translate-x-4' : 'translate-x-0'"
+              />
+            </span>
+          </button>
           <a
             href="https://github.com/"
             target="_blank"
