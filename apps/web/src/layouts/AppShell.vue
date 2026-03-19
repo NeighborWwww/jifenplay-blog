@@ -3,8 +3,8 @@ import NavBar from '../components/NavBar.vue'
 </script>
 
 <template>
-  <div class="min-h-dvh bg-[rgb(var(--bg))] text-[rgb(var(--fg))]">
-    <div class="pointer-events-none fixed inset-0 -z-10">
+  <div class="relative min-h-dvh text-[rgb(var(--fg))]">
+    <div class="pointer-events-none fixed inset-0 -z-10 bg-[rgb(var(--bg))]">
       <div
         class="flowBlob absolute -top-48 left-1/2 h-[620px] w-[980px] -translate-x-1/2 rounded-full blur-3xl"
       />
