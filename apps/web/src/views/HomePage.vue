@@ -1,11 +1,12 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import { RouterLink } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import AppShell from '../layouts/AppShell.vue'
 import { useTypewriter } from '../composables/useTypewriter'
 
 const { t, tm } = useI18n()
-const heroStrings = tm('home.hero') as unknown as string[]
+const heroStrings = computed(() => tm('home.hero') as unknown as string[])
 const { text: heroText, cursor: heroCursor } = useTypewriter(heroStrings, {
   typeMs: 65,
   deleteMs: 35,
