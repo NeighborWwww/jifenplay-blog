@@ -1,6 +1,16 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router'
 import AppShell from '../layouts/AppShell.vue'
+import { useTypewriter } from '../composables/useTypewriter'
+
+const { text: heroText, cursor: heroCursor } = useTypewriter(
+  [
+    'Simple blog, high-tech feel.',
+    'Write in Markdown. Ship in minutes.',
+    'Minimal UI. Maximum clarity.',
+  ],
+  { typeMs: 65, deleteMs: 35, pauseAfterTypeMs: 900, pauseAfterDeleteMs: 250 },
+)
 </script>
 
 <template>
@@ -8,7 +18,15 @@ import AppShell from '../layouts/AppShell.vue'
     <section class="relative">
       <div class="mb-10">
         <h1 class="text-balance text-4xl font-semibold tracking-tight sm:text-6xl">
-          Simple blog, high-tech feel.
+          <span class="relative inline-flex items-baseline">
+            <span>{{ heroText }}</span>
+            <span
+              class="ml-1 inline-block w-[0.7ch] select-none text-[rgba(var(--fg)/0.6)]"
+              aria-hidden="true"
+            >
+              {{ heroCursor }}
+            </span>
+          </span>
         </h1>
         <p class="mt-4 max-w-2xl text-pretty text-base leading-7 text-[rgba(var(--fg)/0.7)] sm:text-lg">
           Clean typography, generous spacing, subtle glass + gradients. Built with Vue + Vite and
