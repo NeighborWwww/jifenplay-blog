@@ -45,6 +45,7 @@ Then open `http://localhost/`.
 ## CMS backend (Directus)
 
 Directus provides an admin UI + API for managing blog content.
+This deployment uses **SQLite** (a single DB file on a Docker volume) to keep costs low.
 
 - Copy env template:
 

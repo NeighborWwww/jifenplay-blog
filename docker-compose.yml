@@ -7,32 +7,16 @@ services:
       - "80:80"
     restart: unless-stopped
 
-  db:
-    image: postgres:16-alpine
-    environment:
-      POSTGRES_DB: ${POSTGRES_DB:-directus}
-      POSTGRES_USER: ${POSTGRES_USER:-directus}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-directus}
-    volumes:
-      - db_data:/var/lib/postgresql/data
-    restart: unless-stopped
-
   directus:
     image: directus/directus:latest
-    depends_on:
-      - db
     ports:
       - "8055:8055"
     environment:
       KEY: ${DIRECTUS_KEY:-replace-me}
       SECRET: ${DIRECTUS_SECRET:-replace-me}
 
-      DB_CLIENT: pg
-      DB_HOST: db
-      DB_PORT: 5432
-      DB_DATABASE: ${POSTGRES_DB:-directus}
-      DB_USER: ${POSTGRES_USER:-directus}
-      DB_PASSWORD: ${POSTGRES_PASSWORD:-directus}
+      DB_CLIENT: sqlite3
+      DB_FILENAME: /directus/database/data.db
 
       # First-run admin bootstrap
       ADMIN_EMAIL: ${DIRECTUS_ADMIN_EMAIL:-admin@example.com}
@@ -54,12 +38,13 @@ services:
       AUTH_GITHUB_IDENTIFIER_KEY: ${DIRECTUS_AUTH_GITHUB_IDENTIFIER_KEY:-email}
 
     volumes:
+      - directus_database:/directus/database
       - directus_uploads:/directus/uploads
       - directus_extensions:/directus/extensions
     restart: unless-stopped
 
 volumes:
-  db_data:
+  directus_database:
   directus_uploads:
   directus_extensions:
 
